@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matriz Védica — Leituras Astrológicas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --deep: #0b0a14; --violet: #2d2660; --gold: #c9a84c; --gold-light: #e8d08a;
+    --rose: #c97b8a; --cream: #faf6ef; --dim: rgba(250,246,239,.5); --mid: rgba(250,246,239,.78);
+    --serif: 'Cormorant Garamond', Georgia, serif; --display: 'Cinzel', serif; --sans: 'Jost', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--deep); color: var(--cream); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; text-align: center; }
+  .stars-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .star { position: absolute; background: #fff; border-radius: 50%; animation: tw var(--d,3s) ease-in-out infinite var(--dl,0s); }
+  @keyframes tw { 0%,100%{opacity:var(--mn,.12);transform:scale(1)} 50%{opacity:var(--mx,.65);transform:scale(1.4)} }
+  section { position: relative; z-index: 1; }
+  .hero { min-height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 5rem 2rem 4rem; background: radial-gradient(ellipse 90% 65% at 50% 38%, rgba(45,38,96,.58) 0%, transparent 68%); }
+  .hero-sym { font-size: 2rem; color: var(--gold); margin-bottom: 1.8rem; animation: float 5s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .eyebrow { font-family: var(--serif); font-size: .85rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; opacity: 0; animation: up .7s ease .2s forwards; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.6rem,7vw,5.5rem); font-weight: 300; line-height: 1.12; width: 100%; max-width: 760px; margin: 0 auto 1.4rem; text-align: center; opacity: 0; animation: up .7s ease .4s forwards; }
+  .hero h1 em { font-style: italic; color: var(--gold-light); display: inline; text-align: center; }
+  .hero-sub { font-family: var(--serif); font-style: italic; font-size: clamp(.95rem,2vw,1.2rem); color: var(--mid); width: 100%; max-width: 500px; margin: 0 auto 2.4rem; text-align: center; opacity: 0; animation: up .7s ease .6s forwards; }
+  .btn-gold { display: inline-block; font-family: var(--serif); font-size: .95rem; letter-spacing: .2em; text-transform: uppercase; color: var(--deep); background: var(--gold); padding: 1rem 2.6rem; border-radius: 2px; text-decoration: none; transition: all .3s; opacity: 0; animation: up .7s ease .8s forwards; }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline { display: inline-block; font-family: var(--display); font-size: .67rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); background: transparent; padding: .9rem 2.2rem; border-radius: 2px; text-decoration: none; border: 1px solid rgba(201,168,76,.4); transition: all .3s; }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,.07); }
+  @keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .offers-section { padding: 6rem 1.5rem 7rem; }
+  .section-eyebrow { font-family: var(--display); font-size: .6rem; letter-spacing: .38em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; }
+  .section-title { font-family: var(--serif); font-size: clamp(1.9rem,4.2vw,3.2rem); font-weight: 300; line-height: 1.15; color: var(--cream); margin-bottom: 3.5rem; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .offers-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 1.4rem; max-width: 1100px; margin: 0 auto; }
+  .card { border: 1px solid rgba(201,168,76,.18); padding: 2.4rem 1.8rem 2rem; border-radius: 4px; background: rgba(255,255,255,.02); position: relative; transition: all .3s; display: flex; flex-direction: column; align-items: center; }
+  .card:hover { transform: translateY(-5px); border-color: rgba(201,168,76,.45); background: rgba(255,255,255,.04); }
+  .card.hot { border-color: var(--gold); background: rgba(201,168,76,.05); }
+  .card-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); font-family: var(--display); font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; background: var(--gold); color: var(--deep); padding: .28rem 1.2rem; white-space: nowrap; }
+  .card-icon { font-size: 1.8rem; margin-bottom: .9rem; }
+  .card-name { font-family: var(--display); font-size: .82rem; letter-spacing: .1em; color: var(--gold-light); margin-bottom: .35rem; }
+  .card-tag { font-family: var(--serif); font-style: italic; font-size: .88rem; color: var(--dim); margin-bottom: 1.2rem; }
+  .card-price { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: var(--cream); line-height: 1; margin-bottom: 1.6rem; }
+  .card-price small { font-size: .9rem; color: var(--dim); }
+  .card-list { list-style: none; width: 100%; flex: 1; margin-bottom: 1.8rem; text-align: left; }
+  .card-list li { font-size: .84rem; color: var(--mid); padding: .38rem 0; border-bottom: 1px solid rgba(255,255,255,.05); display: flex; align-items: flex-start; gap: .5rem; }
+  .card-list li::before { content: '✦'; color: var(--gold); font-size: .42rem; margin-top: 7px; flex-shrink: 0; }
+  .card a { width: 100%; text-align: center; }
+  footer { padding: 2.5rem 1.5rem; border-top: 1px solid rgba(201,168,76,.1); }
+  .footer-logo { font-family: var(--display); font-size: 1rem; letter-spacing: .3em; color: var(--gold); display: block; margin-bottom: .4rem; }
+  footer p { font-size: .7rem; color: var(--dim); letter-spacing: .08em; margin-top: .25rem; }
+  @media (max-width: 600px) { .offers-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="stars-bg" id="stars"></div>
+
+<section class="hero">
+  <div class="hero-sym">✦</div>
+  <h1>O que você sente<br><em>já estava escrito</em><br>no dia em que você nasceu.</h1>
+  <p class="hero-sub">Os padrões que se repetem. Os relacionamentos que não sustentam. A sensação de estar fora do lugar. Tudo isso tem uma raiz. E ela está no seu mapa.</p>
+  <a href="https://wa.me/5531982192409?text=Olá!+Quero+conhecer+as+leituras+da+Matriz+Védica." target="_blank" class="btn-gold">Quero minha leitura →</a>
+</section>
+
+<section class="offers-section">
+  <p class="section-eyebrow">Escolha sua leitura</p>
+  <h2 class="section-title">Cada alma tem<br><em>uma necessidade diferente.</em></h2>
+  <div class="offers-grid">
+
+    <div class="card">
+      <div class="card-icon">🌞</div>
+      <p class="card-name">ASTROLOGIA OCIDENTAL</p>
+      <p class="card-tag">Mapa natal completo</p>
+      <p class="card-price">R$77 <small>· PDF em 3 dias</small></p>
+      <ul class="card-list">
+        <li>Análise profunda de todos os planetas e casas</li>
+        <li>Sol, Lua e Ascendente — sua tríade essencial</li>
+        <li>Padrões emocionais e comportamentais</li>
+        <li>Relacionamentos: o que você atrai e por quê</li>
+        <li>Talentos naturais e dons escondidos</li>
+        <li>Desafios kármicos e como trabalhar com eles</li>
+        <li>Propósito e direção de vida</li>
+        <li>PDF personalizado e detalhado (15–25 pág.)</li>
+      </ul>
+      <a href="https://wa.me/5531982192409?text=Olá!+Quero+a+leitura+de+Astrologia+Ocidental+(R%2477)." target="_blank" class="btn-outline">Quero esta leitura →</a>
+    </div>
+
+    <div class="card hot">
+      <div class="card-badge">Mais profunda</div>
+      <div class="card-icon">🌙</div>
+      <p class="card-name">ASTROLOGIA VÉDICA</p>
+      <p class="card-tag">Jyotish — a ciência da luz</p>
+      <p class="card-price">R$97 <small>· PDF em 3 dias</small></p>
+      <ul class="card-list">
+        <li>Mapa védico completo (Rasi e Navamsha)</li>
+        <li>Seu Nakshatra — estrela de nascimento</li>
+        <li>Dharma: o papel que você veio desempenhar</li>
+        <li>Padrões kármicos de vidas anteriores</li>
+        <li>Relacionamentos e compatibilidade pela Lua</li>
+        <li>Doshas planetários e como equilibrá-los</li>
+        <li>Períodos de vida (Dashas) — o que esperar</li>
+        <li>Bloqueios profundos e como superá-los</li>
+        <li>PDF exclusivo e aprofundado (20–30 pág.)</li>
+      </ul>
+      <a href="https://wa.me/5531982192409?text=Olá!+Quero+a+leitura+de+Astrologia+Védica+(R%2497)." target="_blank" class="btn-gold">Quero esta leitura →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">✨</div>
+      <p class="card-name">MATRIZ DO DESTINO</p>
+      <p class="card-tag">Numerologia & arcanos</p>
+      <p class="card-price">R$50 <small>· PDF em 3 dias</small></p>
+      <ul class="card-list">
+        <li>Mapa energético completo da Matriz</li>
+        <li>Missão de vida pelos arcanos maiores</li>
+        <li>Dons naturais e talentos adormecidos</li>
+        <li>Bloqueios energéticos e como dissolvê-los</li>
+        <li>Padrões de relacionamento e amor</li>
+        <li>Linha do tempo kármica e pontos de virada</li>
+        <li>Recursos internos para ativar nesta vida</li>
+        <li>PDF personalizado (10–15 pág.)</li>
+      </ul>
+      <a href="https://wa.me/5531982192409?text=Olá!+Quero+a+leitura+de+Matriz+do+Destino+(R%2450)." target="_blank" class="btn-outline">Quero esta leitura →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🌹</div>
+      <p class="card-name">MATRIZ DO CASAL</p>
+      <p class="card-tag">Para dois mapas juntos</p>
+      <p class="card-price">R$66 <small>· PDF em 3 dias</small></p>
+      <ul class="card-list">
+        <li>Matriz do destino dos dois parceiros</li>
+        <li>Conexão kármica entre os dois mapas</li>
+        <li>Por que vocês se atraíram — e o que isso revela</li>
+        <li>Padrões de conflito e como transformá-los</li>
+        <li>Missão conjunta e propósito da união</li>
+        <li>Pontos de força e vulnerabilidade do casal</li>
+        <li>Como crescer juntos sem se perder</li>
+        <li>PDF comparativo completo (12–18 pág.)</li>
+      </ul>
+      <a href="https://wa.me/5531982192409?text=Olá!+Quero+a+leitura+de+Matriz+do+Destino+Casal+(R%2466)." target="_blank" class="btn-outline">Quero esta leitura →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">MATRIZ VÉDICA</span>
+  <p>Astrologia Clássica &nbsp;·&nbsp; Astrologia Védica &nbsp;·&nbsp; Matriz do Destino</p>
+  <p style="margin-top:.5rem;">✦ &nbsp;Entrega em PDF &nbsp;·&nbsp; Pagamento seguro &nbsp;·&nbsp; Atendimento pelo WhatsApp</p>
+</footer>
+
+<script>
+  const bg = document.getElementById('stars');
+  for (let i = 0; i < 130; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz=(Math.random()*2.3+.4).toFixed(1), d=(Math.random()*4+2).toFixed(1),
+          dl=(Math.random()*6).toFixed(1), mn=(Math.random()*.1+.04).toFixed(2),
+          mx=(Math.random()*.45+.3).toFixed(2);
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;--d:${d}s;--dl:-${dl}s;--mn:${mn};--mx:${mx}`;
+    bg.appendChild(s);
+  }
+</script>
+</body>
+</html>
